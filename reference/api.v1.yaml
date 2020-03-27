@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  title: api
+  version: '1.0'
+  description: CPE Chatbot API Description
+  contact:
+    name: Mike
+servers:
+  - url: 'https://awrchatbot.org/api'
+    description: Live System
+paths:
+  /auth:
+    post:
+      summary: login
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  api-key:
+                    type: string
+      operationId: post-auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: string
+                pass:
+                  type: string
+      parameters: []
+      description: get authentication token
+  /evangelists:
+    get:
+      summary: search
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  firstname:
+                    type: string
+                  lastname:
+                    type: string
+                  email:
+                    type: string
+                  cellphone:
+                    type: string
+                  teachercode:
+                    type: array
+                    items:
+                      type: string
+              examples: {}
+      operationId: get-evangelists
+      security:
+        - API Key: []
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: firstname
+        - schema:
+            type: string
+          in: query
+          name: lastname
+        - schema:
+            type: string
+          in: query
+          name: email
+        - schema:
+            type: string
+          in: query
+          name: cellphone
+      description: search for evangelists
+  '/evangelists/{id}':
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    get:
+      summary: details
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  firstname:
+                    type: string
+                  lastname:
+                    type: string
+                  email:
+                    type: string
+                  cellphone:
+                    type: string
+                  teachercode:
+                    type: array
+                    items:
+                      type: string
+      operationId: get-evangelists-id
+      security:
+        - API Key: []
+      description: get full evangelist details
+    put:
+      summary: edit
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: put-evangelists-id
+      security:
+        - API Key: []
+      description: edit evangelist
+    delete:
+      summary: remove
+      tags: []
+      responses:
+        '200':
+          description: OK
+      operationId: delete-evangelists-id
+      security:
+        - API Key: []
+      description: delete evanglist
+components:
+  schemas: {}
+  securitySchemes:
+    API Key:
+      name: api-key
+      type: apiKey
+      in: query
+security:
+  - undefined: []
+tags: []
