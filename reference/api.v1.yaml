@@ -8,6 +8,8 @@ info:
 servers:
   - url: 'https://awrchatbot.org/api'
     description: Live System
+  - url: 'https://cpe.toak.de/api'
+    description: Test System
 paths:
   /auth:
     post:
@@ -17,12 +19,9 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            text/plain:
               schema:
                 type: object
-                properties:
-                  api-key:
-                    type: string
       operationId: post-auth
       requestBody:
         content:
@@ -30,9 +29,7 @@ paths:
             schema:
               type: object
               properties:
-                user:
-                  type: string
-                pass:
+                idtoken:
                   type: string
       parameters: []
       description: get authentication token
@@ -65,7 +62,7 @@ paths:
               examples: {}
       operationId: get-evangelists
       security:
-        - API Key: []
+        - idtoken: []
       parameters:
         - schema:
             type: string
@@ -118,7 +115,7 @@ paths:
                       type: string
       operationId: get-evangelists-id
       security:
-        - API Key: []
+        - idtoken: []
       description: get full evangelist details
     put:
       summary: edit
@@ -128,7 +125,7 @@ paths:
           description: OK
       operationId: put-evangelists-id
       security:
-        - API Key: []
+        - idtoken: []
       description: edit evangelist
     delete:
       summary: remove
@@ -138,13 +135,13 @@ paths:
           description: OK
       operationId: delete-evangelists-id
       security:
-        - API Key: []
+        - idtoken: []
       description: delete evanglist
 components:
   schemas: {}
   securitySchemes:
-    API Key:
-      name: api-key
+    idtoken:
+      name: Google Sign in
       type: apiKey
       in: query
 security:
